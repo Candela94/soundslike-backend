@@ -1,0 +1,23 @@
+@dominio = http://localhost:3004
+@id = 67eba21db98c883d098bba8d
+
+
+### Crear usuarios 
+POST {{dominio}}/api/v1/usuarios
+Content-Type: application/json
+
+{
+    "name": "Candela Fos",
+    "email": "cande@gmail.com",
+    "password": "cande123",
+    "username": "Candela94"
+}
+
+
+### Obtener usuarios 
+GET {{dominio}}/api/v1/usuarios
+
+
+### Obtener un usuario 
+GET {{dominio}}/api/v1/usuarios/{{id}}
+

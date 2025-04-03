@@ -9,7 +9,7 @@ const options = {
 
     collation: {
         locale:'es',
-        strenght:1
+        strength:1
     }
 }
 
@@ -26,7 +26,7 @@ const usuarioSchema = new mongoose.Schema({
     }, 
 
 
-    email: {
+   password: {
         type:String,
         required: true,
         
@@ -37,6 +37,7 @@ const usuarioSchema = new mongoose.Schema({
 
         type: String, 
         required: true, 
+        unique:true
 
     },
 

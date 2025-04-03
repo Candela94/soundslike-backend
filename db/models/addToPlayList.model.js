@@ -7,7 +7,7 @@ const options = {
 
     collation: {
         locale:'es',
-        strenght:1
+        strength:1
     }
 }
 
