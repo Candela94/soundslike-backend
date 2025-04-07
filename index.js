@@ -31,5 +31,5 @@ app.use("/api/v1", router)
 
 
 app.listen( PORT , () => {
-    console.log(`Servidor funcionando en ${BACKEND_URL}`)
+    console.log(`Servidor funcionando en ${DOMAIN}:${PORT}`)
 })
