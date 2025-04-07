@@ -1,4 +1,4 @@
-@dominio = http://localhost:3004
+@dominio = http://localhost:3003
 @id = 67eba21db98c883d098bba8d
 
 
@@ -7,10 +7,10 @@ POST {{dominio}}/api/v1/usuarios
 Content-Type: application/json
 
 {
-    "name": "Candela Fos",
-    "email": "cande@gmail.com",
+    "name": "Laura",
+    "email": "laura@gmail.com",
     "password": "cande123",
-    "username": "Candela94"
+    "username": "Laura94"
 }
 
 

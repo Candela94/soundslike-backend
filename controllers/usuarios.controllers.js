@@ -63,7 +63,13 @@ export const getUsuario = async (req, res, next) => {
 export const createUsuario = async (req, res, next) => {
 
 
-    const { name, email, username, password  } = req.body;
+    const { name, email, username, password , repeatPassword  } = req.body;
+
+    if(password !== repeatPassword) {
+        return res.status(400).json({
+            message: 'Las contraseñas no coinciden'
+        })
+    }
 
 
     try {
