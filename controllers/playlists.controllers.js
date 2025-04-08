@@ -70,6 +70,7 @@ export const createPlayList = async (req, res, next) => {
     try {
 
         const nuevaPlayList = await Playlist.create({ nombre });
+        console.log(nuevaPlayList)
         responseAPI.data = nuevaPlayList;
         responseAPI.msg = ``
         responseAPI.status = 'ok';
