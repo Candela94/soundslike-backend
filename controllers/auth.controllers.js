@@ -115,12 +115,12 @@ export const loginUser = async (req, res, next) => {
     try {
 
         //1. Traemos datos del body
-        const { username, password } = req.body
+        const { email, password } = req.body
 
 
 
         //2.Verificamos si el usuario existe 
-        const user = await Usuario.findOne({ username })
+        const user = await Usuario.findOne({ email })
 
         if (!user) {
             return res.status(401).json({

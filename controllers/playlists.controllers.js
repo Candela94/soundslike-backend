@@ -63,13 +63,13 @@ export const getPlayList = async (req, res, next) => {
 export const createPlayList = async (req, res, next) => {
 
 
-    const { nombre, userId, cancion  } = req.body;
+    const { nombre} = req.body;
     
 
 
     try {
 
-        const nuevaPlayList = await Playlist.create({ name, email ,  username, password });
+        const nuevaPlayList = await Playlist.create({ nombre });
         responseAPI.data = nuevaPlayList;
         responseAPI.msg = ``
         responseAPI.status = 'ok';
@@ -85,18 +85,18 @@ export const createPlayList = async (req, res, next) => {
 
 
 
-//Eliminar un usuario 
+//Eliminar una playlist 
 
-export const deleteUsuario = async (req, res, next) => {
+export const deletePlayList = async (req, res, next) => {
 
 
     const { id } = req.params
 
     try {
 
-        const eliminado = await Alumno.findByIdAndDelete(id);
-        responseAPI.data = eliminado;
-        responseAPI.msg = `Usuario con id ${id} eliminado con éxito`
+        const eliminada = await Playlist.findByIdAndDelete(id);
+        responseAPI.data = eliminada;
+        responseAPI.msg = `Playlist con id ${id} eliminado con éxito`
         responseAPI.status = 'ok';
 
         res.status(200).json(responseAPI)
@@ -110,23 +110,23 @@ export const deleteUsuario = async (req, res, next) => {
 
 
 
-// Actualizar un usuario 
-export const updateUsuario = async (req, res, next) => {
+// Actualizar una playlist
+export const updatePlaylist = async (req, res, next) => {
     const { id } = req.params
-    const { nombre , email} = req.body
+    const { nombre } = req.body
 
 
 
     try {
 
-        const actualizado = await Alumno.findByIdAndUpdate(id, 
+        const actualizado = await Playlist.findByIdAndUpdate(id, 
             { 
                 nombre:nombre,
-                 email: email 
+               
             }, { new: true });
 
         responseAPI.data = actualizado;
-        responseAPI.msg = `Usuario con id ${id} ha sido actualizado con éxito :)`
+        responseAPI.msg = `Playlist con id ${id} ha sido actualizada con éxito :)`
         responseAPI.status = 'ok';
 
         res.status(200).json(responseAPI)

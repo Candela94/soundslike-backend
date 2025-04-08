@@ -1,0 +1,24 @@
+
+
+@dominio = http://localhost:3003
+
+
+### Crear PLAYLIST 
+POST {{dominio}}/api/v1/playlists
+Content-Type: application/json
+
+{
+    "nombre": "lista2"
+  
+}
+
+
+
+### Obtener PLAYLISTS
+GET {{dominio}}/api/v1/playlists
+Content-Type: application/json
+
+{
+    "nombre": "lista2"
+  
+}

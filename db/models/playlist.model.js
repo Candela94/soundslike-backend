@@ -48,7 +48,7 @@ const playListSchema = new mongoose.Schema({
 
 
 
-})
+}, options)
 
 
 export const Playlist = mongoose.model('Playlist', playListSchema)
