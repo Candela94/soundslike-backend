@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
 
 
         } else if (file.mimetype.startsWith('audio/')) {
-            cb(null, true)
+            cb(null, 'public/uploads/audio')
 
 
         } else {

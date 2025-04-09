@@ -23,12 +23,19 @@ const cancionSchema = new mongoose.Schema({
 
 
     nombre: String,
+    
     artista: String,
+    
     genero: String,
+    
     tag: String,
+    
     year: Number,
+    
     imagen:String,
+    
     audio:String,
+    
     createdAt: {
 
         type: Date, 

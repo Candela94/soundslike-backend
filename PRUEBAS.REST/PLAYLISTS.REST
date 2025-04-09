@@ -1,6 +1,7 @@
 
 
 @dominio = http://localhost:3003
+@id = 67f5441dc9bb31c4517302fc
 
 
 ### Crear PLAYLIST 
@@ -16,5 +17,12 @@ Content-Type: application/json
 
 ### Obtener PLAYLISTS
 GET {{dominio}}/api/v1/playlists
+Content-Type: application/json
+
+
+
+
+### Eliminar PLAYLISTS
+DELETE {{dominio}}/api/v1/playlists/{{id}}
 Content-Type: application/json
 

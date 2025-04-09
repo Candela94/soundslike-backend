@@ -115,4 +115,35 @@ export const deleteCancion = async (req, res, next) => {
 
 
 
+// Actualizar una cancion
+export const updateCancion = async (req, res, next) => {
+    const { id } = req.params
+    const { nombre } = req.body
+
+
+
+    try {
+
+        const actualizada = await Cancion.findByIdAndUpdate(id, 
+            { 
+                nombre:nombre,
+               
+            }, { new: true });
+
+        responseAPI.data = actualizada;
+        responseAPI.msg = `Cancion con id ${id} ha sido actualizada con éxito :)`
+        responseAPI.status = 'ok';
+
+        res.status(200).json(responseAPI)
+
+    } catch (e) {
+        console.error("tuvimos un error ", e)
+        next(e)
+    }
+}
+
+
+
+
+
 
