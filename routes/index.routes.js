@@ -41,7 +41,7 @@ router.post('/producto/uploads', uploadFiles.fields([
     
         console.log(req.file);
 
-        const imageUrl = `${BACKEND_URL}/uploads/${req.files.filename.imgprod[0].filename}`
+        const imageUrl = `${BACKEND_URL}/uploads/${req.files.imgprod[0].filename}`
         const audioUrl = `${BACKEND_URL}/uploads/audio${req.files.audio[0].filename}`
 
         //Creamos canción en la base de datos 

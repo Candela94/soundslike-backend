@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
 
         const fileExt = path.extname(file.originalname);
 
-        const date = new Date().toISOString.replace(/:/g, '-').replace(/\./g, '-');
+        const date = new Date().toISOString().replace(/:/g, '-').replace(/\./g, '-');
 
         //crear el nuevo nombre del archivo
         const filename = `${file.fieldname}-${date}-${fileExt}`
