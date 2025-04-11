@@ -7,7 +7,7 @@ import { uploadFiles } from '../middlewares/uploadImgAudio.middlewares.js';
 import { BACKEND_URL } from '../config/config.js';
 import { getAllCanciones, getCancion, createCancion, deleteCancion,updateCancion } from '../controllers/canciones.controllers.js';
 import { Cancion } from '../db/models/cancion.model.js';
-
+import { AdminMiddleware } from '../middlewares/auth.middleware.js';
 
 
 
@@ -89,6 +89,17 @@ router.post('/producto/uploads', uploadFiles.fields([
 
 
 })
+
+
+
+// ---------------------------------
+//       Ruta ADMIN
+// ---------------------------------
+router.get('/admin', AdminMiddleware, (req, res) => {
+    res.json({message:'Bienvenidx, admin :)'})
+})
+
+
 
 
 

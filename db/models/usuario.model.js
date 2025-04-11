@@ -19,6 +19,14 @@ const options = {
 const usuarioSchema = new mongoose.Schema({
 
 
+    
+        name: {
+    
+            type: String, 
+            required: true, 
+    
+        },
+
     email: {
         type:String,
         required: true,
@@ -42,19 +50,18 @@ const usuarioSchema = new mongoose.Schema({
     },
 
 
-    name: {
-
-        type: String, 
-        required: true, 
-
-    },
-
 
     createdAt: {
 
         type: Date, 
         default: Date.now
 
+    },
+
+    role: {
+        type:String,
+        role: ['user', 'admin'],
+        default: 'user'
     }
 
 
