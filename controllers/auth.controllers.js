@@ -33,7 +33,7 @@ export const registerUser = async (req, res, next) => {
         const existingUser = await Usuario.findOne({ email });
 
         if (existingUser) {
-            return res.satatus(400).json({
+            return res.status(400).json({
 
                 mensaje: "El usuario con este email ya existe, prueba a iniciar sesión"
 

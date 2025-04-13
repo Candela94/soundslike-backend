@@ -4,12 +4,12 @@ import mongoose from "mongoose";
 
 
 const options = {
-    collection:'usuarios',
-    strict:true,
+    collection: 'usuarios',
+    strict: true,
 
     collation: {
-        locale:'es',
-        strength:1
+        locale: 'es',
+        strength: 1
     }
 }
 
@@ -19,48 +19,56 @@ const options = {
 const usuarioSchema = new mongoose.Schema({
 
 
-    
-        name: {
-    
-            type: String, 
-            required: true, 
-    
-        },
+
+    name: {
+
+        type: String,
+        required: true,
+
+    },
 
     email: {
-        type:String,
+        type: String,
         required: true,
-        unique:true
-    }, 
+        unique: true
+    },
 
 
-   password: {
-        type:String,
+    password: {
+        type: String,
         required: true,
-        
-    }, 
-
-
-    username: {
-
-        type: String, 
-        required: true, 
-        unique:true
 
     },
 
 
+    username: {
+
+        type: String,
+        required: true,
+        unique: true
+
+    },
+
+
+    playlists: [{
+        type:mongoose.Schema.Types.ObjectId, ref: 'Playlist'
+    }],
+
+
+    canciones: {
+        type: mongoose.Schema.Types.ObjectId, ref: 'Cancion'
+    },
 
     createdAt: {
-
-        type: Date, 
+ 
+        type: Date,
         default: Date.now
 
     },
 
     role: {
-        type:String,
-        role: ['user', 'admin'],
+        type: String,
+        enum: ['user', 'admin'],
         default: 'user'
     }
 

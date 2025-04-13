@@ -1,13 +1,13 @@
 import {Router} from 'express'
 
-import { getAllUsuarios, getUsuario, createUsuario, deleteUsuario, updateUsuario } from '../controllers/usuarios.controllers.js';
+import { getAllUsuarios, getUsuario, createUsuario, deleteUsuario, updateUsuario, getListsUser, createMyList } from '../controllers/usuarios.controllers.js';
 import { loginUser, registerUser } from '../controllers/auth.controllers.js';
-import { getAllPlayLists, getPlayList, createPlayList, deletePlayList, updatePlaylist } from '../controllers/playlists.controllers.js';
+import { getAllPlayLists, getPlayList,  createPlayList, deletePlayList, updatePlaylist } from '../controllers/playlists.controllers.js';
 import { uploadFiles } from '../middlewares/uploadImgAudio.middlewares.js';
 import { BACKEND_URL } from '../config/config.js';
-import { getAllCanciones, getCancion, createCancion, deleteCancion,updateCancion } from '../controllers/canciones.controllers.js';
+import { getAllCanciones,getAllSongsPlayList, addSongToPlayList, getCancion, createCancion, deleteCancion,updateCancion } from '../controllers/canciones.controllers.js';
 import { Cancion } from '../db/models/cancion.model.js';
-import { AdminMiddleware } from '../middlewares/auth.middleware.js';
+import { AdminMiddleware, authMiddleWare } from '../middlewares/auth.middleware.js';
 
 
 
@@ -17,10 +17,10 @@ const router = Router();
 
 
 // ---------------------------------
-//       Ruta UPLOADS
+//       Ruta UPLOADS ADMIN
 // ---------------------------------
 
-router.post('/producto/uploads', uploadFiles.fields([
+router.post('/admin/uploads', AdminMiddleware, uploadFiles.fields([
     {name: 'imgprod'},
     {name:'audio'}
 
@@ -37,7 +37,7 @@ router.post('/producto/uploads', uploadFiles.fields([
         }
 
 
-        //Me falta aquí guardar req.file.filename en la base de datos 
+     
     
         console.log(req.file);
 
@@ -95,7 +95,7 @@ router.post('/producto/uploads', uploadFiles.fields([
 // ---------------------------------
 //       Ruta ADMIN
 // ---------------------------------
-router.get('/admin', AdminMiddleware, (req, res) => {
+router.get('/usuarios/admin', AdminMiddleware, (req, res) => {
     res.json({message:'Bienvenidx, admin :)'})
 })
 
@@ -125,6 +125,23 @@ router.put("/usuarios/:id" , updateUsuario)
 
 //login 
 router.post("/usuarios/login" , loginUser)
+
+
+//registro
+router.post("/usuarios/register" , registerUser)
+
+
+
+
+//Obtener playlists de un usuario 
+router.get("/me/playlists", authMiddleWare, getListsUser )
+
+
+//El usuario crea una lista
+router.post("/me/playlists", authMiddleWare, createMyList)
+
+
+
 
 
 
@@ -158,19 +175,30 @@ router.put("/playlists/:id" , updatePlaylist)
 
 
 //obtener playlists
-router.get("/playlists" , getAllCanciones)
+router.get("/canciones" , getAllCanciones)
 
 // //obtener una playlist
-router.get("/playlists/:id" , getCancion)
+router.get("/canciones/:id" , getCancion)
 
 // //crear 
-router.post("/playlists" , createCancion)
+router.post("/canciones" , createCancion)
 
 // //eliminar
-router.delete("/playlists/:id" , deleteCancion )
+router.delete("/canciones/:id" , deleteCancion )
 
 //Actualizar
-router.put("/playlists/:id" , updateCancion)
+router.put("/canciones/:id" , updateCancion)
+
+
+
+//Obtener canciones de una lista 
+router.get('/playlists/:pid/canciones', getAllSongsPlayList)
+
+//Añadir cancion a una lista
+router.post("/playlists/:pid/canciones/:cid" ,addSongToPlayList ,)
+
+
+
 
 
 

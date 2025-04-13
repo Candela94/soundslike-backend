@@ -5,6 +5,7 @@ import { Usuario } from '../db/models/usuario.model.js'
 
 
 //Autenticar cualquier usuario
+
 export const authMiddleWare = (req, res, next) => {
 
     const token = req.header('Authorization')?.replace('Bearer ', '')
@@ -19,6 +20,7 @@ export const authMiddleWare = (req, res, next) => {
         //Verificamos token
         const decoded = jwt.verify(token, JWT_SECRET)
         req.userId = decoded.userId;
+        console.log("Usuario autenticado con ID:", req.userId);
         next();
     } catch (e) {
 
@@ -27,6 +29,7 @@ export const authMiddleWare = (req, res, next) => {
 
 
 }
+
 
 
 

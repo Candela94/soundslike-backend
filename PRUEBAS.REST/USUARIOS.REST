@@ -1,5 +1,5 @@
 @dominio = http://localhost:3003
-@id = 67eba21db98c883d098bba8d
+@id = 67fb899033f51b790900214f
 
 
 ### Crear usuarios 
@@ -8,8 +8,9 @@ Content-Type: application/json
 
 {
     "name": "Laura",
-    "email": "laura@gmail.com",
-    "password": "laura123",
+    "email": "laura@hotmail.com",
+    "password": "laura1233",
+    "repeatPassword":"laura1233",
     "username": "Laura94"
 }
 
@@ -20,4 +21,50 @@ GET {{dominio}}/api/v1/usuarios
 
 ### Obtener un usuario 
 GET {{dominio}}/api/v1/usuarios/{{id}}
+
+
+
+### Registro usuarios 
+POST {{dominio}}/api/v1/usuarios/register
+Content-Type: application/json
+
+{
+    "name": "Administrador",
+    "email": "admin@admin.com",
+    "password": "admin1994",
+    "repeatPassword":"admin1994",
+    "username": "adminUploads"
+}
+
+
+
+### Eliminar un usuario 
+DELETE {{dominio}}/api/v1/usuarios/{{id}}
+
+
+
+
+
+### login usuarios 
+POST {{dominio}}/api/v1/usuarios/login
+Content-Type: application/json
+
+{
+   
+    "email": "juan@hotmail.com",
+    "password": "juan1233"
+   
+}
+
+
+
+### update usuario
+PUT {{dominio}}/api/v1/usuarios/{{id}}
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2Y5MDY0ZTNkZjRlOTlmMWZjZDVlYTIiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc0NDM3MzMyNiwiZXhwIjoxNzQ0MzgwNTI2fQ.E8dJv2qlUvDpEFLETnSa2tnC5QyNpg1-GUy4bq3Cs1Y
+
+{
+    "role":"admin"
+}
+
 

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 
 const options = {
-    collection:'playlist',
+    collection:'playlists',
     strict:true,
 
     collation: {
@@ -29,9 +29,9 @@ const playListSchema = new mongoose.Schema({
     },
 
 
-    cancion: {
+    cancion: [{
         type: mongoose.Schema.Types.ObjectId, ref:'Cancion'
-    },
+    }],
 
 
     createdAt: {

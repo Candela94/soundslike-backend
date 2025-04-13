@@ -1,6 +1,8 @@
 
 
 import { Cancion } from "../db/models/cancion.model.js";
+import { Playlist } from "../db/models/playlist.model.js";
+
 
 
 
@@ -143,6 +145,62 @@ export const updateCancion = async (req, res, next) => {
 }
 
 
+
+
+
+
+
+
+//Obtener canciones de una lista
+export const getAllSongsPlayList = async(req,res,next) => {
+
+    const {pid} = req.params
+
+    try {
+        const canciones = await Cancion.find({playlist:pid});
+        res.status(200).json(canciones);
+
+
+    } catch(e) {
+
+        res.status(500).json({message:'Error al obtener canciones de la playlist'})
+
+    }
+}
+
+
+
+
+//Añadir una canción a una lista 
+export const addSongToPlayList = async (req,res,next) => {
+
+    const {pid,cid} = req.params
+
+
+
+    try{
+
+        const playlist = await Playlist.findById(pid);
+        if(!playlist) { return res.status(404).json({message: 'Playlist no encontrada'})}
+
+        playlist.cancion = cid;  //relación de cancion con la playlist
+        await playlist.save();
+
+
+        //Agregar valores a un campo evitando que ya exista 
+        //bibliografia https://platzi.com/blog/mongodb-aggregation-framework-ejemplos-y-ejercicios/
+
+        await Cancion.findByIdAndUpdate(cid, {
+            $addToSet: {playlist:pid}
+        })
+        res.status(200).json({ message: 'Canción añadida a la playlist con éxito' });
+
+
+    } catch(e) {
+        res.status(500).json({ message: 'Error al añadir canción a la playlist', error });
+
+    }
+}
 
 
 
