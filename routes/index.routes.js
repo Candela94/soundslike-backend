@@ -170,10 +170,10 @@ router.put("/playlists/:id" , updatePlaylist)
 // ---------------------------------
 
 
-//obtener playlists
+//obtener canciones
 router.get("/canciones" , getAllCanciones)
 
-// //obtener una playlist
+// //obtener una cancion
 router.get("/canciones/:id" , getCancion)
 
 // //crear 

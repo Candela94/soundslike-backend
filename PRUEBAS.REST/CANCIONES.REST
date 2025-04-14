@@ -1,0 +1,6 @@
+
+@dominio = http://localhost:3003
+
+### Obtener PLAYLISTS
+GET {{dominio}}/api/v1/canciones
+Content-Type: application/json

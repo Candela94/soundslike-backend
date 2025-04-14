@@ -16,7 +16,7 @@ const responseAPI = {
 
 
 //Obtener canciones
-export const getAllCanciones = async () => {
+export const getAllCanciones = async (req, res, next) => {
 
 
     try {
@@ -38,7 +38,7 @@ export const getAllCanciones = async () => {
 
 //Obtener una cancion
 
-export const getCancion = async () => {
+export const getCancion = async (req, res, next) => {
 
     const { id } = req.params
 
