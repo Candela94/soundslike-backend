@@ -1,5 +1,5 @@
 @dominio = http://localhost:3003
-@id = 67fb899033f51b790900214f
+@id = 67fbce0ce015388fbac9f7f7
 
 
 ### Crear usuarios 
@@ -13,6 +13,12 @@ Content-Type: application/json
     "repeatPassword":"laura1233",
     "username": "Laura94"
 }
+
+
+
+
+
+
 
 
 ### Obtener usuarios 
@@ -58,13 +64,18 @@ Content-Type: application/json
 
 
 
-### update usuario
-PUT {{dominio}}/api/v1/usuarios/{{id}}
+
+
+### crear admin 
+POST {{dominio}}/api/v1/setup-admin
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2Y5MDY0ZTNkZjRlOTlmMWZjZDVlYTIiLCJuYW1lIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc0NDM3MzMyNiwiZXhwIjoxNzQ0MzgwNTI2fQ.E8dJv2qlUvDpEFLETnSa2tnC5QyNpg1-GUy4bq3Cs1Y
 
 {
-    "role":"admin"
+   "name": "Admin",
+   "username": "Admin-SoundsLike",
+   "email": "admin@admin.com",
+   "password": "contraseñaAdmin123",
+  "secretPassword": "clave-soundslike-administrador"
+    
+   
 }
-
-

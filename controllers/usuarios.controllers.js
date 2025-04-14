@@ -4,7 +4,7 @@ import { Usuario } from "../db/models/usuario.model.js";
 import jwt from 'jsonwebtoken'
 import { JWT_SECRET } from '../config/config.js'
 import { Playlist } from "../db/models/playlist.model.js";
-
+import bcrypt from 'bcrypt'
 
 
 
@@ -94,6 +94,8 @@ export const createUsuario = async (req, res, next) => {
 
 
 
+
+
 //Eliminar un usuario 
 
 export const deleteUsuario = async (req, res, next) => {
@@ -136,7 +138,7 @@ export const updateUsuario = async (req, res, next) => {
         const decoded = jwt.verify(token, JWT_SECRET);
 
         if (decoded.userId !== id && decoded.role !== 'admin') {
-            return resizeTo.status(403).json({ message: 'No tienes permiso para actualizar' })
+            return res.status(403).json({ message: 'No tienes permiso para actualizar' })
         }
 
         const actualizado = await Usuario.findByIdAndUpdate(id,
@@ -189,7 +191,6 @@ export const createMyList = async (req, res, next) => {
         })
 
 
-        console.log("Playlist creada en la BD:", newPlayList);
 
         return res.status(201).json({
             message:'Lista creada con éxito',

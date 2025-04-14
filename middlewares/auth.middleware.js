@@ -37,7 +37,7 @@ export const authMiddleWare = (req, res, next) => {
 
 export const AdminMiddleware = async (req, res, next) => {
 
-    const token = req.header('Authorization')?.replace('Bearer', '')
+    const token = req.header('Authorization')?.replace('Bearer ', '')
 
     if (!token) {
         return res.status(401).json({ message: 'Acceso denegado, token requerido' })

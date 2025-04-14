@@ -115,7 +115,7 @@ export const loginUser = async (req, res, next) => {
     try {
 
         //1. Traemos datos del body
-        const { email, password } = req.body
+        const { email, password, role } = req.body
 
 
 
@@ -141,6 +141,7 @@ export const loginUser = async (req, res, next) => {
             {
                 userId: user._id,
                 name: user.name,
+                role: user.role
 
 
             },
@@ -164,7 +165,8 @@ export const loginUser = async (req, res, next) => {
 
                 id: user._id,
                 name: user.name,
-                email: user.email
+                email: user.email,
+                role:user.role
 
                
             }
@@ -179,5 +181,64 @@ export const loginUser = async (req, res, next) => {
 
 
     }
+
+}
+
+
+
+
+
+
+//Admin
+
+export const createAdmin = async (req, res, next) => {
+
+
+    try {
+
+        const adminExists = await Usuario.findOne({role:'admin'});
+
+
+        if(adminExists) {
+            return res.status(403).json({message_:'Ya existe un administrador'})
+        }
+
+
+        const {name, email, username, password, secretPassword} = req.body;
+
+        if(secretPassword !== 'clave-soundslike-administrador'){
+            return res.status(401).json({message: 'Clave incorrecta'})
+        }
+
+
+        const hashedPassword = await bcrypt.hash(password,10)
+
+        const admin = await Usuario.create({
+            name,
+            email,
+            username,
+            password: hashedPassword,
+            role:'admin'
+        })
+
+
+        res.status(201).json({
+            message: 'Administrador creado correctamente',
+            admin: {
+              name: admin.name,
+              email: admin.email,
+              username: admin.username
+            }
+          });
+
+
+    } catch (e) {
+
+        console.error(e);
+        next(e);
+
+
+    }
+
 
 }

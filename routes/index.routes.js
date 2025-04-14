@@ -1,14 +1,13 @@
 import {Router} from 'express'
 
 import { getAllUsuarios, getUsuario, createUsuario, deleteUsuario, updateUsuario, getListsUser, createMyList } from '../controllers/usuarios.controllers.js';
-import { loginUser, registerUser } from '../controllers/auth.controllers.js';
+import { loginUser, registerUser , createAdmin} from '../controllers/auth.controllers.js';
 import { getAllPlayLists, getPlayList,  createPlayList, deletePlayList, updatePlaylist } from '../controllers/playlists.controllers.js';
 import { uploadFiles } from '../middlewares/uploadImgAudio.middlewares.js';
 import { BACKEND_URL } from '../config/config.js';
 import { getAllCanciones,getAllSongsPlayList, addSongToPlayList, getCancion, createCancion, deleteCancion,updateCancion } from '../controllers/canciones.controllers.js';
 import { Cancion } from '../db/models/cancion.model.js';
 import { AdminMiddleware, authMiddleWare } from '../middlewares/auth.middleware.js';
-
 
 
 const router = Router();
@@ -39,10 +38,10 @@ router.post('/admin/uploads', AdminMiddleware, uploadFiles.fields([
 
      
     
-        console.log(req.file);
+        console.log(req.files);
 
         const imageUrl = `${BACKEND_URL}/uploads/${req.files.imgprod[0].filename}`
-        const audioUrl = `${BACKEND_URL}/uploads/audio${req.files.audio[0].filename}`
+        const audioUrl = `${BACKEND_URL}/uploads/audio/${req.files.audio[0].filename}`
 
         //Creamos canción en la base de datos 
         const cancion = await Cancion.create({
@@ -63,12 +62,6 @@ router.post('/admin/uploads', AdminMiddleware, uploadFiles.fields([
         return res.status(200).json({
             success:"ok",
             message:"Imagen subida con éxito :)",
-            fileData: req.file,
-    
-    
-
-
-
             data: cancion, 
              fileData: {  
                 imageUrl: imageUrl,
@@ -95,10 +88,14 @@ router.post('/admin/uploads', AdminMiddleware, uploadFiles.fields([
 // ---------------------------------
 //       Ruta ADMIN
 // ---------------------------------
+
+
 router.get('/usuarios/admin', AdminMiddleware, (req, res) => {
     res.json({message:'Bienvenidx, admin :)'})
 })
 
+//Crear admin
+router.post('/setup-admin', createAdmin)
 
 
 
@@ -110,13 +107,16 @@ router.get('/usuarios/admin', AdminMiddleware, (req, res) => {
 //obtener usuarios
 router.get("/usuarios" , getAllUsuarios)
 
-// //obtener un usuario 
+//obtener un usuario 
 router.get("/usuarios/:id" , getUsuario)
 
-// //crear 
+//crear 
 router.post("/usuarios" , createUsuario)
 
-// //eliminar
+
+
+
+//Eliminar
 router.delete("/usuarios/:id" , deleteUsuario )
 
 //Actualizar
@@ -139,10 +139,6 @@ router.get("/me/playlists", authMiddleWare, getListsUser )
 
 //El usuario crea una lista
 router.post("/me/playlists", authMiddleWare, createMyList)
-
-
-
-
 
 
 
