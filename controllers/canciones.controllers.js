@@ -1,5 +1,6 @@
 
 
+import mongoose from "mongoose";
 import { Cancion } from "../db/models/cancion.model.js";
 import { Playlist } from "../db/models/playlist.model.js";
 
@@ -157,8 +158,18 @@ export const getAllSongsPlayList = async(req,res,next) => {
     const {pid} = req.params
 
     try {
+        const playlist = await Playlist.findById(pid).select('nombre');
+        if(!playlist) {
+            return res.status(404).json({message:'playlist no encontrada'})
+        }
+        
         const canciones = await Cancion.find({playlist:pid});
-        res.status(200).json(canciones);
+        res.status(200).json(
+            {
+                nombre:playlist.nombre,
+                canciones
+            }
+        );
 
 
     } catch(e) {
@@ -175,33 +186,130 @@ export const getAllSongsPlayList = async(req,res,next) => {
 export const addSongToPlayList = async (req,res,next) => {
 
     const {pid,cid} = req.params
-
+    const userId = req.userId;
 
 
     try{
 
         const playlist = await Playlist.findById(pid);
-        if(!playlist) { return res.status(404).json({message: 'Playlist no encontrada'})}
 
-        playlist.cancion = cid;  //relación de cancion con la playlist
+        if(!playlist) { 
+            
+            console.log(`Playlist ${pid} no encontrada`);
+            return res.status(404).json({message: 'Playlist no encontrada'})
+        
+        }
+
+
+        if (playlist.userId.toString() !== userId) {
+            console.log(`El usuario ${userId} no tiene permisos para modificar la playlist ${pid}`);
+            return res.status(403).json({message: 'No tienes permiso para modificar esta playlist'});
+        }
+
+
+
+        const cancion = await Cancion.findById(cid);
+        if (!cancion) {
+            console.log(`Canción ${cid} no encontrada`);
+            return res.status(404).json({message: 'Canción no encontrada'});
+        }
+
+        // Verificar si la canción ya está en la playlist
+        const cancionId = new mongoose.Types.ObjectId(cid)
+
+        if (playlist.cancion.includes(cancionId)) {
+            console.log(`La canción ${cid} ya está en la playlist ${pid}`);
+            return res.status(400).json({message: 'La canción ya está en la playlist'});
+        }
+
+
+        //bibliografia https://platzi.com/blog/mongodb-aggregation-framework-ejemplos-y-ejercicios/
+
+
+        playlist.cancion.push(cid);
         await playlist.save();
 
+     
 
-        //Agregar valores a un campo evitando que ya exista 
-        //bibliografia https://platzi.com/blog/mongodb-aggregation-framework-ejemplos-y-ejercicios/
 
         await Cancion.findByIdAndUpdate(cid, {
             $addToSet: {playlist:pid}
         })
-        res.status(200).json({ message: 'Canción añadida a la playlist con éxito' });
+        res.status(200).json({ message: 'Canción añadida a la playlist con éxito', status:'ok' ,data:playlist});
 
 
     } catch(e) {
-        res.status(500).json({ message: 'Error al añadir canción a la playlist', error });
+
+        console.error("El error es" , e)
+       
+        res.status(500).json({ 
+            message: 'Error al añadir canción a la playlist', 
+            error: e.message 
+        });
+
 
     }
 }
 
 
 
+
+//Eliminar una cancion de una playlist
+
+export const DeleteSongOfPlayList = async (req,res,next) => {
+
+    const {pid,cid} = req.params
+    const userId = req.userId;
+
+
+    try{
+
+        const playlist = await Playlist.findById(pid);
+
+        if(!playlist) { 
+            
+            console.log(`Playlist ${pid} no encontrada`);
+            return res.status(404).json({message: 'Playlist no encontrada'})
+        
+        }
+
+
+        if (playlist.userId.toString() !== userId) {
+            console.log(`El usuario ${userId} no tiene permisos para modificar la playlist ${pid}`);
+            return res.status(403).json({message: 'No tienes permiso para modificar esta playlist'});
+        }
+
+
+        const cancion = await Cancion.findById(cid)
+
+        if (!cancion) {
+            console.log(`Canción ${cid} no encontrada`);
+            return res.status(404).json({message: 'Canción no encontrada'});
+        }
+
+       
+        if(playlist) {
+            playlist.cancion.pull(cid);
+            await playlist.save();
+        }
+
+       
+        res.status(200).json({
+            message: 'Canción eliminada correctamente de la playlist',
+            status: 'ok',
+            data: playlist
+        });
+
+    } catch(e) {
+
+        console.error("El error es" , e)
+       
+        res.status(500).json({ 
+            message: 'Error al añadir canción a la playlist', 
+            error: e.message 
+        });
+
+
+    }
+}
 

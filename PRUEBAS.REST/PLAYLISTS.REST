@@ -2,6 +2,7 @@
 
 @dominio = http://localhost:3003
 @id = 67f5441dc9bb31c4517302fc
+@pid =67fe67dada549cc8f17ac751
 
 
 ### Crear PLAYLIST 
@@ -9,7 +10,7 @@ POST {{dominio}}/api/v1/playlists
 Content-Type: application/json
 
 {
-    "nombre": "lista6"
+    "nombre": "Lista para eliminar"
   
 }
 
@@ -17,6 +18,11 @@ Content-Type: application/json
 
 ### Obtener PLAYLISTS
 GET {{dominio}}/api/v1/playlists
+Content-Type: application/json
+
+
+### Obtener una PLAYLIST
+GET {{dominio}}/api/v1/playlists/{{pid}}
 Content-Type: application/json
 
 

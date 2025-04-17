@@ -1,6 +1,18 @@
 
-@dominio = http://localhost:3003
+@dominio =http://localhost:3003
+@pid =67fe67dada549cc8f17ac751
+@cid =67fe233cda549cc8f17ac6ff
+@token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2ZlNjdiZmRhNTQ5Y2M4ZjE3YWM3NGQiLCJuYW1lIjoiQ2FuZGVsYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ0ODA4NjM5LCJleHAiOjE3NDQ4MTU4Mzl9.V8FNVvkm7j-coeaEK3hLppp8Sdw_KvI3XS5iMiB5trE
 
-### Obtener PLAYLISTS
+### Obtener canciones
 GET {{dominio}}/api/v1/canciones
 Content-Type: application/json
+
+
+
+
+
+### Añadir cancion a una lista 
+POST {{dominio}}/api/v1/playlists/{{pid}}/canciones/{{cid}}
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2ZlNjdiZmRhNTQ5Y2M4ZjE3YWM3NGQiLCJuYW1lIjoiQ2FuZGVsYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ0ODA4NjM5LCJleHAiOjE3NDQ4MTU4Mzl9.V8FNVvkm7j-coeaEK3hLppp8Sdw_KvI3XS5iMiB5trE

@@ -44,7 +44,7 @@ const cancionSchema = new mongoose.Schema({
     },
 
 
-    playlist:[{type:mongoose.Schema.Types.ObjectId, ref:'Playlists'}],
+    playlist:[{type:mongoose.Schema.Types.ObjectId, ref:'Playlist'}],
     userId:[{type:mongoose.Schema.Types.ObjectId, ref: 'Usuario'}]
 
 

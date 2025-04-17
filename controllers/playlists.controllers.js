@@ -1,6 +1,7 @@
 
 
 import { Playlist } from "../db/models/playlist.model.js";
+import { Cancion } from "../db/models/cancion.model.js";
 
 
 
@@ -17,8 +18,15 @@ const responseAPI = {
 export const getAllPlayLists = async (req, res, next) => {
 
     try {
+        const {isAdmin} = req.query
 
-        const playLists = await Playlist.find();
+        let query = {};
+        if(isAdmin === 'true') {
+            query.isAdmin = true;
+        }
+    
+
+        const playLists = await Playlist.find(query);
         responseAPI.data = playLists;
         responseAPI.msg = "Playlists encontradas con éxito"
         responseAPI.status = 'ok';
@@ -39,6 +47,7 @@ export const getPlayList = async (req, res, next) => {
 
     const { id } = req.params
 
+   
 
 
     try {
@@ -83,6 +92,30 @@ export const createPlayList = async (req, res, next) => {
     }
 
 }
+
+
+
+
+
+
+//crear una playlist por género (ADMIN)
+export const createPlaylistByGenero = async ({nombre, genero, coverImage}) => {
+    const canciones = await Cancion.find({genero});
+
+    const nuevaPlayList = await Playlist.create({
+        nombre,
+        cancion: canciones.map(c => c._id),
+        coverImage,
+        isAdmin:true
+    })
+
+    return nuevaPlayList;
+}
+
+
+
+
+
 
 
 
