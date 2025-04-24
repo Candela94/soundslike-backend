@@ -3,7 +3,7 @@ import { Usuario } from "../db/models/usuario.model.js";
 import jwt from 'jsonwebtoken'
 
 import { JWT_SECRET } from "../config/config.js";
-import bcrypt from 'bcryptjs'
+import bcrypt from "bcryptjs";
 
 
 

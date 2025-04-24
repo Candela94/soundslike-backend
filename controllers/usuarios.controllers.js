@@ -4,7 +4,7 @@ import { Usuario } from "../db/models/usuario.model.js";
 import jwt from 'jsonwebtoken'
 import { JWT_SECRET } from '../config/config.js'
 import { Playlist } from "../db/models/playlist.model.js";
-import bcrypt from 'bcryptjs'
+
 
 
 
