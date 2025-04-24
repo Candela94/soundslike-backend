@@ -18,13 +18,18 @@ const responseAPI = {
 export const getAllPlayLists = async (req, res, next) => {
 
     try {
-        const {isAdmin} = req.query
+        const { isAdmin } = req.query
 
         let query = {};
-        if(isAdmin === 'true') {
+
+        if (isAdmin === 'true') {
+
             query.isAdmin = true;
+
+        } else if (isAdmin === 'false') {
+            query.isAdmin = { $ne: true }
         }
-    
+
 
         const playLists = await Playlist.find(query);
         responseAPI.data = playLists;
@@ -47,17 +52,34 @@ export const getPlayList = async (req, res, next) => {
 
     const { id } = req.params
 
-   
+
 
 
     try {
 
-        const playList = await Playlist.findById(id);
-        responseAPI.data = playList;
-        responseAPI.msg = `Playlist con id ${id} encontrada con éxito`
-        responseAPI.status = 'ok';
+        const playList = await Playlist.findById(id).select('nombre artista genero imagen audio').populate('cancion')
 
-        res.status(200).json(responseAPI)
+
+
+
+        res.status(200).json({
+            status: 'ok',
+            msg: `Playlist con id ${id} encontrada con éxito`,
+            data: {
+                nombre: playList.nombre,
+                canciones: playList.cancion ,
+                coverImage: playList.coverImage
+            }
+
+        })
+
+
+        if (!playList) {
+            return res.status(404).json({
+                status: 'error',
+                msg: `Playlist con id ${id} no encontrada`
+            });
+        }
 
     } catch (e) {
         console.error("tuvimos un error ", e)
@@ -67,13 +89,13 @@ export const getPlayList = async (req, res, next) => {
 }
 
 
-//Crear una playlist
 
+//Crear una playlist
 export const createPlayList = async (req, res, next) => {
 
 
-    const { nombre} = req.body;
-    
+    const { nombre } = req.body;
+
 
 
     try {
@@ -99,14 +121,14 @@ export const createPlayList = async (req, res, next) => {
 
 
 //crear una playlist por género (ADMIN)
-export const createPlaylistByGenero = async ({nombre, genero, coverImage}) => {
-    const canciones = await Cancion.find({genero});
+export const createPlaylistByGenero = async ({ nombre, genero, coverImage }) => {
+    const canciones = await Cancion.find({ genero });
 
     const nuevaPlayList = await Playlist.create({
         nombre,
         cancion: canciones.map(c => c._id),
         coverImage,
-        isAdmin:true
+        isAdmin: true
     })
 
     return nuevaPlayList;
@@ -153,10 +175,10 @@ export const updatePlaylist = async (req, res, next) => {
 
     try {
 
-        const actualizado = await Playlist.findByIdAndUpdate(id, 
-            { 
-                nombre:nombre,
-               
+        const actualizado = await Playlist.findByIdAndUpdate(id,
+            {
+                nombre: nombre,
+
             }, { new: true });
 
         responseAPI.data = actualizado;

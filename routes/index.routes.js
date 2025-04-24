@@ -8,6 +8,7 @@ import { BACKEND_URL } from '../config/config.js';
 import { getAllCanciones, getAllSongsPlayList, addSongToPlayList, DeleteSongOfPlayList, getCancion, createCancion, deleteCancion, updateCancion } from '../controllers/canciones.controllers.js';
 import { Cancion } from '../db/models/cancion.model.js';
 import { AdminMiddleware, authMiddleWare } from '../middlewares/auth.middleware.js';
+import { addToFavoritos, getAllFavoritos, removeFavorito } from '../controllers/favoritos.controllers.js';
 
 
 const router = Router();
@@ -146,6 +147,11 @@ router.post('/setup-admin', createAdmin)
 
 
 
+
+
+
+
+
 // ---------------------------------
 //       CRUD de usuarios 
 // ---------------------------------
@@ -163,7 +169,7 @@ router.post("/usuarios", createUsuario)
 
 
 //Eliminar
-router.delete("/usuarios/:id", deleteUsuario)
+router.delete("/usuarios/:id", authMiddleWare, deleteUsuario)
 
 //Actualizar
 router.put("/usuarios/:id", updateUsuario)
@@ -210,6 +216,9 @@ router.put("/playlists/:id", updatePlaylist)
 
 
 
+// //crear  playlist por
+router.post("/playlists", createPlayList)
+
 
 // ---------------------------------
 //       CRUD de canciones 
@@ -230,6 +239,25 @@ router.delete("/canciones/:id", deleteCancion)
 
 //Actualizar
 router.put("/canciones/:id", updateCancion)
+
+
+
+
+
+
+//Obtener canciones favoritas 
+router.get('/me/favoritos', authMiddleWare, getAllFavoritos)
+
+
+//Añadir canciones a favoritos 
+router.post('/me/favoritos', authMiddleWare, addToFavoritos)
+
+//Eliminar de favoritos 
+router.delete('/me/favoritos', authMiddleWare, removeFavorito)
+
+
+
+
 
 
 

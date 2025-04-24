@@ -156,25 +156,33 @@ export const updateCancion = async (req, res, next) => {
 export const getAllSongsPlayList = async(req,res,next) => {
 
     const {pid} = req.params
+    console.log('pid es' , pid)
 
     try {
-        const playlist = await Playlist.findById(pid).select('nombre');
+
+
+        const playlist = await Playlist.findById(pid).select('nombre cancion coverImage').populate('cancion');
         if(!playlist) {
             return res.status(404).json({message:'playlist no encontrada'})
         }
         
-        const canciones = await Cancion.find({playlist:pid});
+
+       
+        console.log('IDs de canciones en la playlist:', playlist.cancion);
         res.status(200).json(
             {
                 nombre:playlist.nombre,
-                canciones
+                coverImage:playlist.coverImage,
+                canciones: playlist.cancion
             }
         );
 
 
     } catch(e) {
 
+        console.error('Error al obtener canciones' , e)
         res.status(500).json({message:'Error al obtener canciones de la playlist'})
+        
 
     }
 }
@@ -214,27 +222,30 @@ export const addSongToPlayList = async (req,res,next) => {
             return res.status(404).json({message: 'Canción no encontrada'});
         }
 
-        // Verificar si la canción ya está en la playlist
-        const cancionId = new mongoose.Types.ObjectId(cid)
-
-        if (playlist.cancion.includes(cancionId)) {
-            console.log(`La canción ${cid} ya está en la playlist ${pid}`);
-            return res.status(400).json({message: 'La canción ya está en la playlist'});
-        }
+        
 
 
-        //bibliografia https://platzi.com/blog/mongodb-aggregation-framework-ejemplos-y-ejercicios/
 
-
-        playlist.cancion.push(cid);
-        await playlist.save();
+        // playlist.cancion.push(cid);
+        // await playlist.save();
 
      
 
 
-        await Cancion.findByIdAndUpdate(cid, {
-            $addToSet: {playlist:pid}
-        })
+      const result = await Playlist.updateOne(
+            { _id: pid, userId: userId },
+            { $addToSet: { cancion: cid } }
+        );
+        
+        if (result.modifiedCount === 0 && result.matchedCount === 0) {
+            return res.status(404).json({message: 'Playlist no encontrada o sin permisos'});
+        }
+        
+        // También actualizar la canción
+        await Cancion.updateOne(
+            { _id: cid },
+            { $addToSet: { playlist: pid } }
+        );
         res.status(200).json({ message: 'Canción añadida a la playlist con éxito', status:'ok' ,data:playlist});
 
 

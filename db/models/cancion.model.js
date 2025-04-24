@@ -28,7 +28,7 @@ const cancionSchema = new mongoose.Schema({
     
     genero: String,
     
-    tag: String,
+    tag: [String],
     
     year: Number,
     
