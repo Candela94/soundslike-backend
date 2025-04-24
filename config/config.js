@@ -16,3 +16,6 @@ export const CLUSTER =  process.env.DB_CLUSTER || "cei-practicas.k3hx5.mongodb.n
 export const DATABASE = process.env.DATABASE ||  "soundslike"
 
  export const JWT_SECRET = process.env.JWT_SECRET ||  "Et34WzL=fh5QoVw"
+
+
+ export const DB_MONGODB = process.env.DB_MONGODB || "mongodb+srv://candelafsg:Juanotee77@cei-practicas.k3hx5.mongodb.net/?retryWrites=true&w=majority&appName=CEI-PRACTICAS"
