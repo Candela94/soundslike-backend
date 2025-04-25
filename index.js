@@ -29,18 +29,10 @@ app.get("/", (req,res,next) => {
 
     const pageHTML = `
     
-    <h1> Upload de archivos </h1>
-     <form action ="/api/v1/producto/uploads" method="POST" enctype="multipart/form-data">
-     <input type = "text" name = "nombre" placeholder = "Canción"/> 
-     <input type = "text" name = "artista" placeholder = "Artista"/> 
-     <input type = "text" name = "genero" placeholder = "Género"/>
-     <input type = "text" name = "tag" placeholder = "Tag"/>
+    <h1> Bienvenidx a SOUNDsLIKE :) </h1>
+    
 
-     <input type = "file" name = "imgprod" />
-      <input type = "file" name = "audio" />
-
-     <button type="submit"> Subir canción </button>
-     </form>
+    
     `
 
     res.send(pageHTML)

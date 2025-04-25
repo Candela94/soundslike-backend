@@ -124,7 +124,7 @@ export const deleteUsuario = async (req, res, next) => {
 // Actualizar un usuario 
 export const updateUsuario = async (req, res, next) => {
     const { id } = req.params
-    const { nombre, email, role } = req.body
+    const { nombre, email, role, username } = req.body
 
 
 
@@ -145,7 +145,8 @@ export const updateUsuario = async (req, res, next) => {
             {
                 nombre,
                 email,
-                role
+                role,
+                username
             }, { new: true });
 
         responseAPI.data = actualizado;
