@@ -6,7 +6,7 @@ export const PORT = process.env.PORT || 3003;
 
 export const DOMAIN = process.env.DOMAIN || "http://localhost"
 
-export const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3003"
+export const BACKEND_URL = process.env.BACKEND_URL || "https://soundslike-backend.vercel.app"
 
 
 
