@@ -24,19 +24,19 @@ app.use(cors())
 app.use('/uploads', express.static('public/uploads'))
 app.use('/web', express.static('public'))
 
-app.get("/", (req,res,next) => {
-    res.setHeader("Content-Type", "text/html")
+// app.get("/", (req,res,next) => {
+//     res.setHeader("Content-Type", "text/html")
 
-    const pageHTML = `
+//     const pageHTML = `
     
-    <h1> Bienvenidx a SOUNDsLIKE :) </h1>
+//     <h1> Bienvenidx a SOUNDsLIKE :) </h1>
     
 
     
-    `
+//     `
 
-    res.send(pageHTML)
-})
+//     res.send(pageHTML)
+// })
 
 
 
