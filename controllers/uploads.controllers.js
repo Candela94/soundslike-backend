@@ -3,7 +3,7 @@
 import { Cancion } from "../db/models/cancion.model.js";
 
 import { createPlaylistByGenero } from "./playlists.controllers.js";
-import { BACKEND_URL } from "../config/config";
+import { BACKEND_URL } from "../config/config.js";
 
 
 
