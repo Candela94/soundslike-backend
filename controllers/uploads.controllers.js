@@ -23,7 +23,7 @@ export const uploadSong = async (req, res, next) => {
         if (!req.files || !req.files.imgprod || !req.files.audio) {
             return res.status(400).json({
                 success: false,
-                message: "No se ha proporcionado ninguna imagen"
+                message: "Se requiere imagen, archivo o audio"
             })
         }
 
@@ -48,6 +48,8 @@ export const uploadSong = async (req, res, next) => {
 
         })
 
+        await cancion.save();
+
 
 
 
@@ -65,7 +67,11 @@ export const uploadSong = async (req, res, next) => {
         })
     } catch (e) {
 
-        next(e)
+        console.error('Error en uploadSong:', e);
+        return res.status(500).json({
+            error: 'Error interno del servidor al subir la canción'
+        });
+        
 
 
 
