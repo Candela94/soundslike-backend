@@ -6,7 +6,7 @@ export const PORT = process.env.PORT || 3003;
 
 export const DOMAIN = process.env.DOMAIN || "http://localhost"
 
-export const BACKEND_URL = process.env.BACKEND_URL || "soundslike-backend-production.up.railway.app"
+export const BACKEND_URL = process.env.BACKEND_URL || "https://soundslike-backend-production.up.railway.app/"
 
 
 
