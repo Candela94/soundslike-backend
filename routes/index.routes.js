@@ -11,6 +11,9 @@ import { AdminMiddleware, authMiddleWare } from '../middlewares/auth.middleware.
 import { addToFavoritos, getAllFavoritos, removeFavorito } from '../controllers/favoritos.controllers.js';
 import { uploadPlaylist, uploadSong } from '../controllers/uploads.controllers.js';
 
+
+
+
 const router = Router();
 
 
@@ -38,6 +41,9 @@ router.post('/setup-admin', createAdmin)
 // ---------------------------------
 //       Ruta uploads admin
 // ---------------------------------
+
+
+
 
 //Carga de canciones
 

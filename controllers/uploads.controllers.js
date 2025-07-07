@@ -5,6 +5,9 @@ import { Cancion } from "../db/models/cancion.model.js";
 import { createPlaylistByGenero } from "./playlists.controllers.js";
 import { BACKEND_URL } from "../config/config.js";
 
+import fs from 'fs'
+import cloudinary from "../config/cloudinary.config.js";
+
 
 
 
@@ -29,17 +32,39 @@ export const uploadSong = async (req, res, next) => {
 
 
 
+        //Subir imagen a Cloudinary
+        const img = req.files.imgprod[0].path
+        const imgRes = await cloudinary.uploader.upload(img, {
+            folder: 'imagenes_canciones',
+            resource_type: 'image'
+        })
 
-        console.log(req.files);
 
-        const imageUrl = `${BACKEND_URL}/uploads/imagenes/${req.files.imgprod[0].filename}`
-        const audioUrl = `${BACKEND_URL}/uploads/audio/${req.files.audio[0].filename}`
+        //Subir audio
+        const audio = req.files.audio[0].path;
+        const audioRes = await cloudinary.uploader.upload(audio, {
+            folder: 'audio_canciones',
+            resource_type:'video'  //cloudinary trata así los audios
+        })
+
+
+        //Eliminar archivos locales
+        fs.unlinkSync(img)
+        fs.unlinkSync(audio)
+
+
+
+
+        // console.log(req.files);
+
+        // const imageUrl = `${BACKEND_URL}/uploads/imagenes/${req.files.imgprod[0].filename}`
+        // const audioUrl = `${BACKEND_URL}/uploads/audio/${req.files.audio[0].filename}`
 
         //Creamos canción en la base de datos 
         const cancion = await Cancion.create({
 
-            imagen: imageUrl,
-            audio: audioUrl,
+            imagen: imgRes.secure_url,
+            audio: audioRes.secure_url,
             nombre: req.body.nombre,
             artista: req.body.artista,
             genero: req.body.genero,
@@ -58,8 +83,8 @@ export const uploadSong = async (req, res, next) => {
             message: "Imagen subida con éxito :)",
             data: cancion,
             fileData: {
-                imageUrl: imageUrl,
-                audioUrl: audioUrl
+                imageUrl: imgRes.secure_url,
+                audioUrl: audioRes.secure_url
                 //peso:`${Math.round(req.file.size/1024)}`,
                 //size:"500kb"
             }
@@ -82,7 +107,18 @@ export const uploadSong = async (req, res, next) => {
 }
 
 
-  export  const uploadPlaylist =  async (req, res, next) => {
+
+
+
+
+
+
+
+
+
+
+
+export  const uploadPlaylist =  async (req, res, next) => {
 
 
         try {
@@ -97,14 +133,26 @@ export const uploadSong = async (req, res, next) => {
             }
 
 
-            const coverImageUrl = `${BACKEND_URL}/uploads/imagenes/${req.file.filename}`
+
+            const portada = req.file.path;
+            const portadaRes = await cloudinary.uploader.upload(portada, {
+                folder:'portada_playlist'
+            })
+
+
+            
+
+            fs.unlinkSync(portada)
+
+
+            // const coverImageUrl = `${BACKEND_URL}/uploads/imagenes/${req.file.filename}`
 
 
             const nuevaPlayList = await createPlaylistByGenero(
                 {
                     nombre,
                     genero,
-                    coverImage: coverImageUrl
+                    coverImage: portadaRes.secure_url
                 });
 
             return res.status(201).json({

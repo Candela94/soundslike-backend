@@ -1,8 +1,6 @@
 
 
 import express from 'express'
-import { fileURLToPath } from 'url';
-import path from 'path';
 
 
 import {DOMAIN, PORT, BACKEND_URL} from './config/config.js'
@@ -18,16 +16,14 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 app.use(cors())
+
 
 
 //Contenido estático
 app.use('/uploads', express.static('public/uploads'))
-app.use('/web', express.static(path.join(__dirname, 'public/uploads')))
+app.use('/web', express.static('public'))
+
 
 
 
