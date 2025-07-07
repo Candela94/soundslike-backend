@@ -16,29 +16,16 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
-app.use(cors())
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(cors())
 
 
 //Contenido estático
 app.use('/uploads', express.static('public/uploads'))
-app.use('/web', express.static('public'))
-
-// app.get("/", (req,res,next) => {
-//     res.setHeader("Content-Type", "text/html")
-
-//     const pageHTML = `
-    
-//     <h1> Bienvenidx a SOUNDsLIKE :) </h1>
-    
-
-    
-//     `
-
-//     res.send(pageHTML)
-// })
-
-
+app.use('/web', express.static(path.join(__dirname, 'public/uploads')))
 
 
 
