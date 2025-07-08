@@ -20,15 +20,7 @@ export const DATABASE = process.env.DATABASE ||  "soundslike"
 
 
 
-export const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME 
 
-export const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY
-
-
-export const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET 
-
-
-export const CLOUDINARY_URL = process.env.CLOUDINARY_URL 
 
 
  export const DB_MONGODB = process.env.DB_MONGODB || "mongodb+srv://candelafsg:Juanotee77@cei-practicas.k3hx5.mongodb.net/soundslike?retryWrites=true&w=majority&appName=CEI-PRACTICAS"
