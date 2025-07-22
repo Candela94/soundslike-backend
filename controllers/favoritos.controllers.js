@@ -5,7 +5,7 @@ import { Usuario } from "../db/models/usuario.model.js";
 
 
 
-
+//obtener favoritos
 export const getAllFavoritos = async (req, res) => {
 
 

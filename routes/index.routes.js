@@ -76,7 +76,7 @@ router.post('/admin/uploads/playlists',
 // ---------------------------------
 
 //obtener usuarios
-router.get("/usuarios", getAllUsuarios)
+router.get("/usuarios",AdminMiddleware, getAllUsuarios )
 
 //obtener un usuario 
 router.get("/usuarios/:id", getUsuario)
@@ -91,7 +91,7 @@ router.post("/usuarios", createUsuario)
 router.delete("/usuarios/:id", authMiddleWare, deleteUsuario)
 
 //Actualizar
-router.put("/usuarios/:id", updateUsuario)
+router.put("/usuarios/:id",authMiddleWare, updateUsuario)
 
 
 //login 
